@@ -1,0 +1,21 @@
+require:
+  - rubocop-rspec
+AllCops:
+  NewCops: enable
+  Exclude:
+    - Guardfile
+    - Gemfile
+    - Gemfile.lock
+
+Style/Documentation:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Enabled: false
+
+RSpec/IndexedLet:
+  Enabled: false
+
+Layout/LineLength:
+  Exclude:
+    - "spec/**/*"
