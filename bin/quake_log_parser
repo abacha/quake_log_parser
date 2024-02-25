@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+
+require './lib/game_manager'
+require 'json'
+
+game_manager = GameManager.new(ARGV[0])
+game_manager.parse
+puts JSON.pretty_generate(game_manager.report)

@@ -3,19 +3,32 @@
 require './lib/game_manager'
 
 describe GameManager do
-  subject(:game_manager) { described_class.new(log_file) }
+  subject(:game_manager) { described_class.new('quake_test.log') }
 
-  let(:log_file) { 'quake_test.log' }
+  describe '#new_game' do
+    before { game_manager.new_game }
 
-  describe 'initialize' do
     it { expect(game_manager.game).to be_an_instance_of(Game) }
   end
 
   describe '#read_line' do
     let(:game) { game_manager.game }
 
+    context 'when a new game starts' do
+      let(:log_content) do
+        ['0:00 InitGame: \sv_floodProtect\1\sv_maxPing\0\sv_minPing\0\sv_maxRate\10000\sv_minRate\0\sv_hostname']
+      end
+
+      before do
+        log_content.each { |line| game_manager.read_line(line) }
+      end
+
+      it { expect(game_manager.game).to be_an_instance_of(Game) }
+    end
+
     context 'when a player connects' do
       before do
+        game_manager.new_game
         log_content.each { |line| game_manager.read_line(line) }
       end
 
@@ -40,6 +53,7 @@ describe GameManager do
       end
 
       before do
+        game_manager.new_game
         players.each do |player|
           game.player_connect(player.id)
           game.player_set_name(player.id, player.name)

@@ -6,6 +6,8 @@ AllCops:
     - Guardfile
     - Gemfile
     - Gemfile.lock
+    - "*.log"
+    - bin/**/*
 
 Style/Documentation:
   Enabled: false
@@ -19,3 +21,6 @@ RSpec/IndexedLet:
 Layout/LineLength:
   Exclude:
     - "spec/**/*"
+Metrics/MethodLength:
+  Exclude:
+    - 'lib/game_manager.rb'

@@ -25,18 +25,23 @@ class Game
     @score[player_id] = 0
   end
 
+  def player_disconnect(player_id)
+    @players[player_id] = nil
+    @score[player_id] = nil
+  end
+
   def player_set_name(player_id, player_name)
     @players[player_id].name = player_name
   end
 
   def players
-    @players.values.map(&:name)
+    @players.compact.values.map(&:name)
   end
 
   def kill(killer_id, killed_id, weapon_id)
     @kills << [killer_id, killed_id, weapon_id]
 
-    if killer_id == WORLD
+    if killer_id == WORLD || killer_id == killed_id
       @score[killed_id] -= 1
     else
       @score[killer_id] += 1
@@ -44,9 +49,10 @@ class Game
   end
 
   def score
-    @score.transform_keys do |player_id|
+    data = @score.compact.transform_keys do |player_id|
       @players[player_id].name
-    end.to_h
+    end
+    data.sort_by { |_player, score| -score }.to_h
   end
 
   def kill_by_means

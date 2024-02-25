@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require './lib/game'
-require 'pry'
 
 describe Game do
   subject(:game) { described_class.new }
@@ -26,6 +25,14 @@ describe Game do
 
         it { expect(game.players).to eq ['duke'] }
 
+        describe '#player_disconnect' do
+          before { game.player_disconnect(1) }
+
+          context 'when a player disconnects' do
+            it { expect(game.players).to eq [] }
+          end
+        end
+
         context 'when another player connects and sets its nickname' do
           before do
             game.player_connect(2)
@@ -47,22 +54,22 @@ describe Game do
     end
 
     context 'when a player kills with a gun' do
-      let(:weapon) { 'MOD_SHOTGUN' }
+      let(:weapon_id) { 10 }
 
-      before { game.kill(player1.id, player2.id, weapon) }
+      before { game.kill(player1.id, player2.id, weapon_id) }
 
       it { expect(game.score).to eq({ player1.name => 1, player2.name => 0 }) }
-
+      it { expect(game.kill_by_means).to eq({ Settings::MEANS_OF_DEATH[weapon_id] => 1 }) }
       it { expect(game.total_kills).to eq(1) }
     end
 
     context 'when a player is killed by world' do
-      let(:weapon) { 'MOD_TRIGGER_HURT' }
+      let(:weapon_id) { 23 }
 
-      before { game.kill(1022, player1.id, weapon) }
+      before { game.kill(Game::WORLD, player1.id, weapon_id) }
 
       it { expect(game.score).to eq({ player1.name => -1, player2.name => 0 }) }
-
+      it { expect(game.kill_by_means).to eq({ Settings::MEANS_OF_DEATH[weapon_id] => 1 }) }
       it { expect(game.total_kills).to eq(1) }
     end
   end
