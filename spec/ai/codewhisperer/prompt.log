@@ -1,0 +1,61 @@
+>
+  Build a spec file for this game.rb
+
+>>
+  Sure, here's an example of a spec file for the provided game.rb
+
+    class: <game_spec.rb>
+
+  This spec file covers the main functionality of the Game class, including initialization, player management, kill tracking, scoring, and kill statistics. Each test case checks a specific behavior of the class, ensuring that the implementation meets the expected requirements.
+
+  You can run these tests using a testing framework like RSpec. To do so, you'll need to have RSpec installed and configured in your project. Then, you can run the tests with the following command:
+  rspec spec/game_spec.rb
+
+  This will execute the tests and report the results, helping you ensure that the Game class is working as expected.
+
+
+
+>
+  Build aspec file for game_manager.rb
+
+>>
+  Sure, here's an example of a spec file for the GameManager
+
+    class: <game_manager_spec.rb>
+
+  This spec file covers the main functionality of the GameManager
+  class, including initialization, parsing the log file, handling different types of log lines, and managing the game and report data.
+
+  The tests cover the public methods of the class, as well as the private helper methods that handle the different types of log lines. Each test case checks a specific behavior of the class, ensuring that the implementation meets the expected requirements.
+
+  You can run these tests using a testing framework like RSpec. To do so, you'll need to have RSpec installed and configured in your project. Then, you can run the tests with the following command:
+  rspec spec/game_manager_spec.rb
+
+  This will execute the tests and report the results, helping you ensure that the GameManager class is working as expected.
+
+
+>
+  I have 3 log examples (game2.log, game5.log, game7.log)
+  Create an integration test with 3 scenarios that parses the log file and validates the whole application
+
+>>
+  Sure, here's an example of an integration test that covers the parsing of the three log files and validates the overall application:
+
+  class: <integration_spec.rb>
+
+  This integration test covers the following scenarios:
+
+  - Parsing the game2.log file and validating the game report.
+  - Parsing the game5.log file and validating the game report.
+  - Parsing the game7.log file and validating the game report.
+
+  The test uses a hash log_files to store the expected results for each log file. The test then iterates over the log files, creates a GameManager instance for each file, calls the parse
+   method, and validates the resulting game report against the expected values.
+
+  To run this integration test, you'll need to have the
+  game2.log, game5.log, and game7.log files in the spec/fixtures directory. You can then run the test with the following command:
+
+  rspec spec/integration/game_manager_integration_spec.rb
+
+  This will execute the integration test and report the results, ensuring that the
+  GameManager class is able to correctly parse the log files and generate the expected game reports.
